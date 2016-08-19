@@ -1,5 +1,5 @@
 # Co
-Coroutines Anywhere, for Unity 5
+Coroutines in Anywhere, for Unity 5
 
 ## How to Use
 - Case 1: Coroutines in plain class
