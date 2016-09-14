@@ -18,8 +18,8 @@ public class PlainClass {
 public class TestScript : MonoBehaviour {
 
 	private void Start () {
-		Co.Delay(1f, () => Debug.Log("after 1 second"));
-		Co.Delay(2f, () => Debug.Log("after 2 seconds"));
+		Co.Delay(() => Debug.Log("after 1 second"), 1f);
+		Co.Delay(() => Debug.Log("after 2 seconds"), 2f);
 
 		var plainClass = new PlainClass();
 		plainClass.TestCoroutine();

@@ -6,7 +6,7 @@ public interface ICoRunner {
 
 	Coroutine Run (IEnumerator enumerator);
 
-	Coroutine Delay (float delay_sec, Action action, bool unscaled);
+	Coroutine Delay (Action action, float delay_sec, bool unscaled);
 
 	void Stop (Coroutine coroutine);
 
@@ -44,8 +44,8 @@ public static class Co {
 		return WithScene.Run(enumerator);
 	}
 
-	public static Coroutine Delay (float delay_sec, Action action, bool unscaled = false) {
-		return WithScene.Delay(delay_sec, action, unscaled);
+	public static Coroutine Delay (Action action, float delay_sec, bool unscaled = false) {
+		return WithScene.Delay(action, delay_sec, unscaled);
 	}
 
 	public static void Stop (Coroutine coroutine) {
@@ -65,11 +65,11 @@ public sealed class CoRunner : MonoBehaviour, ICoRunner {
 		return StartCoroutine(enumerator);
 	}
 
-	public Coroutine Delay (float delay_sec, Action action, bool unscaled) {
-		return Run(CoDelay(delay_sec, action, unscaled));
+	public Coroutine Delay (Action action, float delay_sec, bool unscaled) {
+		return Run(CoDelay(action, delay_sec, unscaled));
 	}
 
-	private IEnumerator CoDelay (float delay_sec, Action action, bool unscaled) {
+	private IEnumerator CoDelay (Action action, float delay_sec, bool unscaled) {
 		if (unscaled) {
 			var end = Time.unscaledTime + delay_sec;
 			while (end > Time.unscaledTime)
