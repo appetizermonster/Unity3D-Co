@@ -22,12 +22,12 @@ public class PlainClass {
 - Case 2: Running functions with delay in one line
 ```csharp
 private void SomeFunction () {
-  Co.Delay(2f, () => Debug.Log("Executed after 2 seconds!"));
+  Co.Delay(() => Debug.Log("Executed after 2 seconds!"), 2f);
 }
 ```
 
-## Downloads
-[Co-v0.0.1.unitypackage](https://github.com/appetizermonster/Unity3D-Co/raw/master/Co-v0.0.1.unitypackage)
+## Install
+Please use [unity-packman](https://github.com/appetizermonster/unity-packman)
 
 ## License
 MIT
