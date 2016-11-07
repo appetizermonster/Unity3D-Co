@@ -18,12 +18,12 @@ public interface ICoRunner {
 }
 
 public static class Co {
-	private static ICoRunner sceneInstance_ = null;
-	private static ICoRunner permanentInstance_ = null;
+	private static CoRunner sceneInstance_ = null;
+	private static CoRunner permanentInstance_ = null;
 
 	public static ICoRunner WithScene {
 		get {
-			if (sceneInstance_ == null) {
+			if (sceneInstance_ == null || sceneInstance_.gameObject == null) {
 				var go = new GameObject("[CoRunner.Scene]");
 				sceneInstance_ = go.AddComponent<CoRunner>();
 			}
@@ -33,7 +33,7 @@ public static class Co {
 
 	public static ICoRunner WithPermanent {
 		get {
-			if (permanentInstance_ == null) {
+			if (permanentInstance_ == null ||permanentInstance_.gameObject == null) {
 				var go = new GameObject("[CoRunner.Permanent]");
 				GameObject.DontDestroyOnLoad(go);
 				permanentInstance_ = go.AddComponent<CoRunner>();
