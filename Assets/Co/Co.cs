@@ -8,6 +8,10 @@ public interface ICoRunner {
 
 	Coroutine Delay (Action action, float delay_sec, bool unscaled);
 
+	Coroutine WaitFor (Func<bool> predicate);
+
+	Coroutine WaitForUnscaledSeconds (float seconds);
+
 	void Stop (Coroutine coroutine);
 
 	void StopAll ();
@@ -48,6 +52,14 @@ public static class Co {
 		return WithScene.Delay(action, delay_sec, unscaled);
 	}
 
+	public static Coroutine WaitFor (Func<bool> predicate) {
+		return WithScene.WaitFor(predicate);
+	}
+
+	public static Coroutine WaitForUnscaledSeconds (float seconds) {
+		return WithScene.WaitForUnscaledSeconds(seconds);
+	}
+
 	public static void Stop (Coroutine coroutine) {
 		WithScene.Stop(coroutine);
 	}
@@ -79,6 +91,25 @@ public sealed class CoRunner : MonoBehaviour, ICoRunner {
 		}
 		if (action != null)
 			action();
+	}
+
+	public Coroutine WaitFor (Func<bool> predicate) {
+		return Run(CoWaitFor(predicate));
+	}
+
+	private IEnumerator CoWaitFor (Func<bool> predicate) {
+		while (predicate())
+			yield return null;
+	}
+
+	public Coroutine WaitForUnscaledSeconds (float seconds) {
+		return Run(CoWaitForUnscaledSeconds(seconds));
+	}
+
+	private IEnumerator CoWaitForUnscaledSeconds (float seconds) {
+		var end = Time.unscaledTime + seconds;
+		while (end > Time.unscaledTime)
+			yield return null;
 	}
 
 	public void Stop (Coroutine coroutine) {
